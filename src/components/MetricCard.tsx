@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface SparklineProps {
   data: number[];
@@ -18,25 +19,31 @@ const Sparkline = ({ data, color = "hsl(var(--primary))" }: SparklineProps) => {
 
   return (
     <svg width={width} height={height} className="overflow-visible">
-      <polyline
-        fill="none"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        points={points}
-      />
+      <polyline fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" points={points} />
     </svg>
   );
 };
 
-interface MetricCardProps {
+export interface MetricCardProps {
   title: string;
   value: string;
   change: number;
   sparkData: number[];
   isAiSurfaced?: boolean;
 }
+
+export const MetricCardSkeleton = () => (
+  <div className="rounded-lg border border-border bg-card p-5 shadow-sm">
+    <Skeleton className="h-3 w-24 mb-3" />
+    <div className="flex items-end justify-between gap-3">
+      <div>
+        <Skeleton className="h-7 w-20 mb-2" />
+        <Skeleton className="h-3 w-32" />
+      </div>
+      <Skeleton className="h-7 w-20" />
+    </div>
+  </div>
+);
 
 const MetricCard = ({ title, value, change, sparkData, isAiSurfaced = false }: MetricCardProps) => {
   const isPositive = change > 0;
@@ -64,13 +71,8 @@ const MetricCard = ({ title, value, change, sparkData, isAiSurfaced = false }: M
             ) : (
               <TrendingDown className="h-3 w-3 text-destructive" />
             )}
-            <span
-              className={`text-xs font-semibold ${
-                isNeutral ? "text-muted-foreground" : isPositive ? "text-success" : "text-destructive"
-              }`}
-            >
-              {isPositive ? "+" : ""}
-              {change}%
+            <span className={`text-xs font-semibold ${isNeutral ? "text-muted-foreground" : isPositive ? "text-success" : "text-destructive"}`}>
+              {isPositive ? "+" : ""}{change}%
             </span>
             <span className="text-xs text-muted-foreground">vs last month</span>
           </div>
