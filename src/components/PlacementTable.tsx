@@ -1,23 +1,10 @@
 import { motion } from "framer-motion";
-
-interface PlacementRow {
-  industry: string;
-  placements: number;
-  successRate: number;
-  avgDays: number;
-  trend: number;
-}
-
-const data: PlacementRow[] = [
-  { industry: "AI Engineering", placements: 147, successRate: 89, avgDays: 18, trend: 28 },
-  { industry: "Cybersecurity", placements: 132, successRate: 85, avgDays: 22, trend: 12 },
-  { industry: "Cloud Infrastructure", placements: 98, successRate: 82, avgDays: 25, trend: 8 },
-  { industry: "Data Science", placements: 91, successRate: 79, avgDays: 21, trend: 5 },
-  { industry: "Healthcare IT", placements: 64, successRate: 74, avgDays: 30, trend: -5 },
-  { industry: "FinTech", placements: 58, successRate: 81, avgDays: 24, trend: 3 },
-];
+import { usePlacementStats } from "@/hooks/useDashboardData";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PlacementTable = () => {
+  const { data, isLoading } = usePlacementStats();
+
   return (
     <div className="rounded-lg border border-border bg-card shadow-sm">
       <div className="px-5 py-4 border-b border-border">
@@ -36,35 +23,45 @@ const PlacementTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {data.map((row, i) => (
-              <motion.tr
-                key={row.industry}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.15, delay: i * 0.03 }}
-                className="hover:bg-secondary/50 transition-colors duration-100"
-              >
-                <td className="px-5 py-3 font-medium text-card-foreground">{row.industry}</td>
-                <td className="px-5 py-3 text-right font-body tabular-nums text-card-foreground">{row.placements}</td>
-                <td className="px-5 py-3 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <div className="h-1.5 w-16 rounded-full bg-secondary">
-                      <div
-                        className="h-full rounded-full bg-primary transition-all duration-300"
-                        style={{ width: `${row.successRate}%` }}
-                      />
-                    </div>
-                    <span className="tabular-nums text-card-foreground">{row.successRate}%</span>
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-right tabular-nums text-muted-foreground">{row.avgDays}d</td>
-                <td className="px-5 py-3 text-right">
-                  <span className={`text-xs font-semibold tabular-nums ${row.trend > 0 ? "text-success" : "text-destructive"}`}>
-                    {row.trend > 0 ? "+" : ""}{row.trend}%
-                  </span>
-                </td>
-              </motion.tr>
-            ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i}>
+                    <td className="px-5 py-3"><Skeleton className="h-4 w-28" /></td>
+                    <td className="px-5 py-3 text-right"><Skeleton className="h-4 w-10 ml-auto" /></td>
+                    <td className="px-5 py-3 text-right"><Skeleton className="h-4 w-24 ml-auto" /></td>
+                    <td className="px-5 py-3 text-right"><Skeleton className="h-4 w-10 ml-auto" /></td>
+                    <td className="px-5 py-3 text-right"><Skeleton className="h-4 w-10 ml-auto" /></td>
+                  </tr>
+                ))
+              : data?.map((row, i) => (
+                  <motion.tr
+                    key={row.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.15, delay: i * 0.03 }}
+                    className="hover:bg-secondary/50 transition-colors duration-100"
+                  >
+                    <td className="px-5 py-3 font-medium text-card-foreground">{row.industry}</td>
+                    <td className="px-5 py-3 text-right font-body tabular-nums text-card-foreground">{row.placements}</td>
+                    <td className="px-5 py-3 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <div className="h-1.5 w-16 rounded-full bg-secondary">
+                          <div
+                            className="h-full rounded-full bg-primary transition-all duration-300"
+                            style={{ width: `${row.success_rate}%` }}
+                          />
+                        </div>
+                        <span className="tabular-nums text-card-foreground">{row.success_rate}%</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-3 text-right tabular-nums text-muted-foreground">{row.avg_days}d</td>
+                    <td className="px-5 py-3 text-right">
+                      <span className={`text-xs font-semibold tabular-nums ${Number(row.trend) > 0 ? "text-success" : "text-destructive"}`}>
+                        {Number(row.trend) > 0 ? "+" : ""}{row.trend}%
+                      </span>
+                    </td>
+                  </motion.tr>
+                ))}
           </tbody>
         </table>
       </div>

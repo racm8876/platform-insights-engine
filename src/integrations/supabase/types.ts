@@ -14,16 +14,213 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      demand_trends: {
+        Row: {
+          ai: number
+          cloud: number
+          created_at: string
+          cyber: number
+          health: number
+          id: string
+          month: string
+        }
+        Insert: {
+          ai?: number
+          cloud?: number
+          created_at?: string
+          cyber?: number
+          health?: number
+          id?: string
+          month: string
+        }
+        Update: {
+          ai?: number
+          cloud?: number
+          created_at?: string
+          cyber?: number
+          health?: number
+          id?: string
+          month?: string
+        }
+        Relationships: []
+      }
+      intelligence_observations: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          message: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          message: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          message?: string
+        }
+        Relationships: []
+      }
+      metrics: {
+        Row: {
+          change: number
+          created_at: string
+          id: string
+          is_ai_surfaced: boolean
+          recorded_at: string
+          spark_data: number[]
+          title: string
+          value: string
+        }
+        Insert: {
+          change?: number
+          created_at?: string
+          id?: string
+          is_ai_surfaced?: boolean
+          recorded_at?: string
+          spark_data?: number[]
+          title: string
+          value: string
+        }
+        Update: {
+          change?: number
+          created_at?: string
+          id?: string
+          is_ai_surfaced?: boolean
+          recorded_at?: string
+          spark_data?: number[]
+          title?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      placement_stats: {
+        Row: {
+          avg_days: number
+          created_at: string
+          id: string
+          industry: string
+          placements: number
+          quarter: string
+          success_rate: number
+          trend: number
+        }
+        Insert: {
+          avg_days?: number
+          created_at?: string
+          id?: string
+          industry: string
+          placements?: number
+          quarter: string
+          success_rate?: number
+          trend?: number
+        }
+        Update: {
+          avg_days?: number
+          created_at?: string
+          id?: string
+          industry?: string
+          placements?: number
+          quarter?: string
+          success_rate?: number
+          trend?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      recruiter_activity: {
+        Row: {
+          created_at: string
+          id: string
+          interviews: number
+          name: string
+          placements: number
+          quarter: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interviews?: number
+          name: string
+          placements?: number
+          quarter: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interviews?: number
+          name?: string
+          placements?: number
+          quarter?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +347,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
