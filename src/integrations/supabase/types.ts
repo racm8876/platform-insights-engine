@@ -14,7 +14,180 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      demand_trends: {
+        Row: {
+          ai: number
+          cloud: number
+          created_at: string
+          cyber: number
+          health: number
+          id: string
+          month: string
+        }
+        Insert: {
+          ai?: number
+          cloud?: number
+          created_at?: string
+          cyber?: number
+          health?: number
+          id?: string
+          month: string
+        }
+        Update: {
+          ai?: number
+          cloud?: number
+          created_at?: string
+          cyber?: number
+          health?: number
+          id?: string
+          month?: string
+        }
+        Relationships: []
+      }
+      intelligence_observations: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          message: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          message: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          message?: string
+        }
+        Relationships: []
+      }
+      metrics: {
+        Row: {
+          change: number
+          created_at: string
+          id: string
+          is_ai_surfaced: boolean
+          recorded_at: string
+          spark_data: number[]
+          title: string
+          value: string
+        }
+        Insert: {
+          change?: number
+          created_at?: string
+          id?: string
+          is_ai_surfaced?: boolean
+          recorded_at?: string
+          spark_data?: number[]
+          title: string
+          value: string
+        }
+        Update: {
+          change?: number
+          created_at?: string
+          id?: string
+          is_ai_surfaced?: boolean
+          recorded_at?: string
+          spark_data?: number[]
+          title?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      placement_stats: {
+        Row: {
+          avg_days: number
+          created_at: string
+          id: string
+          industry: string
+          placements: number
+          quarter: string
+          success_rate: number
+          trend: number
+        }
+        Insert: {
+          avg_days?: number
+          created_at?: string
+          id?: string
+          industry: string
+          placements?: number
+          quarter: string
+          success_rate?: number
+          trend?: number
+        }
+        Update: {
+          avg_days?: number
+          created_at?: string
+          id?: string
+          industry?: string
+          placements?: number
+          quarter?: string
+          success_rate?: number
+          trend?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      recruiter_activity: {
+        Row: {
+          created_at: string
+          id: string
+          interviews: number
+          name: string
+          placements: number
+          quarter: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interviews?: number
+          name: string
+          placements?: number
+          quarter: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interviews?: number
+          name?: string
+          placements?: number
+          quarter?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
