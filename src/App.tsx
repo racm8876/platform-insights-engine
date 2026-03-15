@@ -4,9 +4,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
-import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
+import HRDashboard from "./pages/HRDashboard";
+import UserDashboard from "./pages/UserDashboard";
+import LicensingDashboard from "./pages/LicensingDashboard";
+import InsightsPage from "./pages/InsightsPage";
+import AuditPage from "./pages/AuditPage";
+import DataPage from "./pages/DataPage";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +32,14 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/" element={<Navigate to="/dashboard/admin" replace />} />
+            <Route path="/dashboard/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/hr" element={<ProtectedRoute><HRDashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/user" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/licensing" element={<ProtectedRoute><LicensingDashboard /></ProtectedRoute>} />
+            <Route path="/insights" element={<ProtectedRoute><InsightsPage /></ProtectedRoute>} />
+            <Route path="/audit" element={<ProtectedRoute><AuditPage /></ProtectedRoute>} />
+            <Route path="/data" element={<ProtectedRoute><DataPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
