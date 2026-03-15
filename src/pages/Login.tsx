@@ -31,7 +31,7 @@ const Login = () => {
     } else if (isSignUp) {
       toast({ title: "Account created", description: "Check your email to confirm your account." });
     } else {
-      navigate("/");
+      navigate("/dashboard/admin");
     }
   };
 
