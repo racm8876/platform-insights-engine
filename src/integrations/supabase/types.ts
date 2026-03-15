@@ -14,6 +14,198 @@ export type Database = {
   }
   public: {
     Tables: {
+      agencies: {
+        Row: {
+          active_recruiters: number
+          created_at: string
+          engagement_score: number
+          id: string
+          license_type: string
+          name: string
+          partner_since: string
+          placements_count: number
+          success_rate: number
+        }
+        Insert: {
+          active_recruiters?: number
+          created_at?: string
+          engagement_score?: number
+          id?: string
+          license_type?: string
+          name: string
+          partner_since?: string
+          placements_count?: number
+          success_rate?: number
+        }
+        Update: {
+          active_recruiters?: number
+          created_at?: string
+          engagement_score?: number
+          id?: string
+          license_type?: string
+          name?: string
+          partner_since?: string
+          placements_count?: number
+          success_rate?: number
+        }
+        Relationships: []
+      }
+      ai_insights: {
+        Row: {
+          category: string
+          created_at: string
+          dashboard_target: string
+          details: string | null
+          generated_by: string
+          id: string
+          is_actionable: boolean
+          severity: string
+          summary: string
+          title: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          dashboard_target?: string
+          details?: string | null
+          generated_by?: string
+          id?: string
+          is_actionable?: boolean
+          severity?: string
+          summary: string
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          dashboard_target?: string
+          details?: string | null
+          generated_by?: string
+          id?: string
+          is_actionable?: boolean
+          severity?: string
+          summary?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      applications: {
+        Row: {
+          applied_at: string
+          candidate_id: string
+          hired_at: string | null
+          id: string
+          job_id: string
+          reviewed_at: string | null
+          status: string
+        }
+        Insert: {
+          applied_at?: string
+          candidate_id: string
+          hired_at?: string | null
+          id?: string
+          job_id: string
+          reviewed_at?: string | null
+          status?: string
+        }
+        Update: {
+          applied_at?: string
+          candidate_id?: string
+          hired_at?: string | null
+          id?: string
+          job_id?: string
+          reviewed_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          resource_id: string | null
+          resource_type: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      candidates: {
+        Row: {
+          created_at: string
+          email: string
+          engagement_score: number
+          experience_years: number
+          id: string
+          industry: string
+          name: string
+          profile_completeness: number
+          skills: string[]
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          engagement_score?: number
+          experience_years?: number
+          id?: string
+          industry: string
+          name: string
+          profile_completeness?: number
+          skills?: string[]
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          engagement_score?: number
+          experience_years?: number
+          id?: string
+          industry?: string
+          name?: string
+          profile_completeness?: number
+          skills?: string[]
+          status?: string
+        }
+        Relationships: []
+      }
       demand_trends: {
         Row: {
           ai: number
@@ -62,6 +254,51 @@ export type Database = {
           created_at?: string
           id?: string
           message?: string
+        }
+        Relationships: []
+      }
+      jobs: {
+        Row: {
+          applications_count: number
+          company: string
+          created_at: string
+          id: string
+          industry: string
+          job_type: string
+          location: string
+          posted_by: string | null
+          required_skills: string[]
+          salary_range: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          applications_count?: number
+          company: string
+          created_at?: string
+          id?: string
+          industry: string
+          job_type?: string
+          location: string
+          posted_by?: string | null
+          required_skills?: string[]
+          salary_range?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          applications_count?: number
+          company?: string
+          created_at?: string
+          id?: string
+          industry?: string
+          job_type?: string
+          location?: string
+          posted_by?: string | null
+          required_skills?: string[]
+          salary_range?: string | null
+          status?: string
+          title?: string
         }
         Relationships: []
       }
